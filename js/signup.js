@@ -31,40 +31,67 @@
     			window.location="http://google.com";
     		}
     	}
-    	var submit = document.getElementsByTagName("button")[1];
-    	submit.addEventListener('click', check);
-    	function check(){
-    		return false;
-    		/*try{
 
-    			var firstName = document.getElementById("firstName").value;
-    			var lastName = document.getElementById("lastName").value;
-    			var address1 = document.getElementById("address1").value;
-    			var city = document.getElementById("city").value;
-    			var state = document.getElementById("state").value;
-    			var zip = document.getElementById("zip").value;
-    			var birthdate = document.getElementById("birthdate").value;
 
-    			var submitOk = true;
 
-    			if (firstName.length>10) {
-    				window.alert("The name may have no more than 10 characters");
-    				submitOK = "false";
-    			} 
-    			if (isNaN(age)||age<1||age>100) {
-    				window.alert("The age must be a number between 1 and 100");
-    				submitOK = "false";
-    			}
-    			if (at==-1) {
-    				window.alert("Not a valid e-mail!");
-    				submitOK = "false";
-    			}
-    			if (submitOK=="false") {
-    				return false;
-    			}
+    	
 
-    			var zipRegExp = new RegExp('^\\d{5}$');
-    			zipRegExp.test(zip);
+
+
+        var signup = document.getElementById("signup");
+        var fields = [signup.elements.firstName, signup.elements.lastName, signup.elements.address1, signup.elements.city,
+                    signup.elements.state, signup.elements.zip, signup.elements.birthdate];
+
+        signup.addEventListener('submit', function(evt){
+            try {
+                evt.returnValue = blank(evt.target);
+
+                if (signup.elements.firstName.length>10) {
+                    return false;
+                } 
+                var zipRegExp = new RegExp('^\\d{5}$');
+                var ziptest = zipRegExp.test(zip);
+                if(zipTest = false) {
+                    return false;
+                }
+                if(signup.elements.occupation == "other") {
+                    
+                }
+
+            } catch(e) {
+                console.log("Exception " + e);
+                evt.returnValue = false;
+            }
+            if(evt.returnValue == false && evt.preventDefault == false) {
+                evt.preventDefault();
+            }
+            console.log(evt.returnValue);
+            return evt.returnValue;
+        });
+
+        function blank(form) {
+            console.log("blank is running");
+            for (var i = 0; i < fields.length; i++) {
+                var fieldValue = fields[i].value.trim();
+                if(!fieldValue.length > 0){
+                    console.log("inside if" + fields[i].value.length);
+                    console.log("value is " + fields[i].value + "!");
+                    //submitOK = false;
+                    fields[i].className = "invalid-field form-control";
+                } else {
+                    fields[i].className = "form-control"
+                }
+            }
+        }
+
+
+
+
+            /*
+            try{
+    			
+
+    			
 
 
     			console.log(firstName);
@@ -82,5 +109,5 @@
     			submit.onclick = false;
     			submit.returnProperty = false;
     		}*/	
-    	}
+    	
     });
